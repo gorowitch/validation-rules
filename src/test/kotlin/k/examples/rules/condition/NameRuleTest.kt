@@ -1,6 +1,7 @@
 package k.examples.rules.condition
 
-import org.assertj.core.api.Assertions.assertThat
+import k.examples.rules.condition.AssertionUtils.assertNotValid
+import k.examples.rules.guarding.AssertionUtils.assertValid
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
@@ -51,13 +52,5 @@ class NameRuleTest {
         fun `Have trailing whitespace characters`() {
             assertNotValid { rule.validate("name\t") }
         }
-    }
-
-    private fun assertValid(lambda: () -> Boolean) {
-        assertThat(lambda.invoke()).isTrue()
-    }
-
-    private fun assertNotValid(lambda: () -> Boolean) {
-        assertThat(lambda.invoke()).isFalse()
     }
 }

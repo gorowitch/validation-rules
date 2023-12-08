@@ -1,8 +1,7 @@
 package k.examples.rules.combined
 
-import k.examples.validation.ValidationResult
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions
+import k.examples.rules.combined.AssertionUtils.assertNotValid
+import k.examples.rules.combined.AssertionUtils.assertValid
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
@@ -79,19 +78,6 @@ class NameRuleTest {
                 "The name \"\t1234567890123456789012345678901234567890123456789012345678901234\" must have a length >=1 and <=64. Was 65",
                 "The name \"\t1234567890123456789012345678901234567890123456789012345678901234\" must start and end with a non-whitespace-character"
             )
-        }
-    }
-
-    private fun assertValid(lambda: () -> ValidationResult) {
-        assertThat(lambda.invoke()).isInstanceOf(ValidationResult.Success::class.java)
-    }
-
-    private fun assertNotValid(lambda: () -> ValidationResult, vararg messages: String) {
-        val result = lambda.invoke()
-        if (result is ValidationResult.Failure) {
-            assertThat(result.errorMessages).containsExactly(*messages)
-        } else {
-            Assertions.fail<Any>()
         }
     }
 }

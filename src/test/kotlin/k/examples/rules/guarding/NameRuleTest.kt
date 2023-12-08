@@ -1,9 +1,7 @@
 package k.examples.rules.guarding
 
-import k.examples.validation.ValidationException
-import org.assertj.core.api.Assertions.assertThatCode
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import org.assertj.core.api.ThrowableAssert.ThrowingCallable
+import k.examples.rules.guarding.AssertionUtils.assertNotValid
+import k.examples.rules.guarding.AssertionUtils.assertValid
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
@@ -70,15 +68,5 @@ class NameRuleTest {
                 "The name \"name\t\" must start and end with a non-whitespace-character"
             )
         }
-    }
-
-    private fun assertValid(throwingCallable: ThrowingCallable) {
-        assertThatCode(throwingCallable).doesNotThrowAnyException()
-    }
-
-    private fun assertNotValid(throwingCallable: ThrowingCallable, message: String) {
-        assertThatThrownBy(throwingCallable)
-            .isInstanceOf(ValidationException::class.java)
-            .hasMessage(message)
     }
 }
