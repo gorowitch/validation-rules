@@ -8,7 +8,7 @@ public abstract sealed class ValidationResult permits ValidationResult.Success, 
 
     public abstract boolean isSuccess();
 
-    public abstract List<String> errorMessages();
+    public abstract List<String> messages();
 
     public static final class Success extends ValidationResult {
         private Success() {
@@ -25,7 +25,7 @@ public abstract sealed class ValidationResult permits ValidationResult.Success, 
         }
 
         @Override
-        public List<String> errorMessages() {
+        public List<String> messages() {
             return List.of();
         }
 
@@ -36,7 +36,7 @@ public abstract sealed class ValidationResult permits ValidationResult.Success, 
 
         @Override
         public void check() {
-            throw new ValidationException(String.join(",", errorMessages()));
+            throw new ValidationException(String.join(",", messages()));
         }
 
         @Override
@@ -46,15 +46,15 @@ public abstract sealed class ValidationResult permits ValidationResult.Success, 
     }
 
     public static final class SingleFailure extends Failure {
-        private final String errorMessage;
+        private final String message;
 
-        SingleFailure(String errorMessage) {
-            this.errorMessage = errorMessage;
+        SingleFailure(String message) {
+            this.message = message;
         }
 
         @Override
-        public List<String> errorMessages() {
-            return List.of(errorMessage);
+        public List<String> messages() {
+            return List.of(message);
         }
     }
 
@@ -66,9 +66,9 @@ public abstract sealed class ValidationResult permits ValidationResult.Success, 
         }
 
         @Override
-        public List<String> errorMessages() {
+        public List<String> messages() {
             return failures.stream()
-                .flatMap(it -> it.errorMessages().stream())
+                .flatMap(it -> it.messages().stream())
                 .toList();
         }
     }

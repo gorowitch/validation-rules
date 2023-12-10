@@ -2,33 +2,33 @@ package k.examples.validation
 
 sealed class ValidationResult {
     abstract val success: Boolean
+    abstract val messages: List<String>
     abstract fun check()
-    abstract val errorMessages: List<String>
 
     object Success : ValidationResult() {
         override val success: Boolean = true
         override fun check() = Unit
-        override val errorMessages: List<String> = listOf()
+        override val messages: List<String> = listOf()
     }
 
     abstract class Failure : ValidationResult() {
         override val success: Boolean = false
         override fun check() {
-            throw ValidationException(errorMessages.joinToString(", "))
+            throw ValidationException(messages.joinToString(", "))
         }
     }
 
-    data class SingleFailure(private val errorMessage: String) : Failure() {
-        override val errorMessages: List<String>
+    data class SingleFailure(private val message: String) : Failure() {
+        override val messages: List<String>
             get() {
-                return listOf(errorMessage)
+                return listOf(message)
             }
     }
 
     data class CombinedFailure(val failures: List<Failure>) : Failure() {
-        override val errorMessages: List<String>
+        override val messages: List<String>
             get() {
-                return failures.flatMap { it.errorMessages }
+                return failures.flatMap { it.messages }
             }
     }
 

@@ -18,7 +18,7 @@ public class AssertionUtils {
         var result = supplier.get();
 
         if (result instanceof ValidationResult.Failure s) {
-            assertThat(s.errorMessages()).containsExactly(messages);
+            assertThat(s.messages()).containsExactly(messages);
         } else {
             fail();
         }

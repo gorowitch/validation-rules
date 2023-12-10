@@ -12,6 +12,6 @@ object AssertionUtils {
         val result = lambda.invoke()
 
         assertThat(result).isInstanceOf(ValidationResult.Failure::class.java)
-        assertThat(result.errorMessages).containsExactly(*messages)
+        assertThat(result.messages).containsExactly(*messages)
     }
 }

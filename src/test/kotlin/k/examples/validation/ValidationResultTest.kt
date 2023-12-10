@@ -17,12 +17,12 @@ class ValidationResultTest {
         }
 
         @Test
-        fun `A failure result is a Failure with a single error message`() {
+        fun `A failure result is a Failure with a single message`() {
             val failure = ValidationResult.failure(MESSAGE)
 
             assertThat(failure).isInstanceOf(Failure::class.java)
 
-            assertThat(failure.errorMessages).containsExactly(MESSAGE)
+            assertThat(failure.messages).containsExactly(MESSAGE)
         }
     }
 
@@ -47,7 +47,7 @@ class ValidationResultTest {
             val combination = ValidationResult.combine(ValidationResult.failure(MESSAGE))
 
             assertThat(combination).isInstanceOf(Failure::class.java)
-            assertThat((combination as Failure).errorMessages).containsExactly(MESSAGE)
+            assertThat((combination as Failure).messages).containsExactly(MESSAGE)
         }
 
         @Test
@@ -68,7 +68,7 @@ class ValidationResultTest {
             )
 
             assertThat(combination).isInstanceOf(Failure::class.java)
-            assertThat((combination as Failure).errorMessages).containsExactly(MESSAGE)
+            assertThat((combination as Failure).messages).containsExactly(MESSAGE)
         }
 
         @Test
@@ -79,7 +79,7 @@ class ValidationResultTest {
             )
 
             assertThat(combination).isInstanceOf(Failure::class.java)
-            assertThat((combination as Failure).errorMessages).containsExactly(MESSAGE_1, MESSAGE_2)
+            assertThat((combination as Failure).messages).containsExactly(MESSAGE_1, MESSAGE_2)
         }
     }
 
@@ -95,7 +95,7 @@ class ValidationResultTest {
             )
 
             assertThat(combination).isInstanceOf(Failure::class.java)
-            assertThat((combination as Failure).errorMessages).containsExactly(MESSAGE_1, MESSAGE_2)
+            assertThat((combination as Failure).messages).containsExactly(MESSAGE_1, MESSAGE_2)
         }
     }
 
@@ -150,13 +150,13 @@ class ValidationResultTest {
         @Test
         fun feedback_success_has_no_messages() {
             val result = ValidationResult.success()
-            assertThat(result.errorMessages).isEmpty()
+            assertThat(result.messages).isEmpty()
         }
 
         @Test
         fun feedback_failure_has_a_message() {
             val result = ValidationResult.failure(MESSAGE)
-            assertThat(result.errorMessages).containsExactly(MESSAGE)
+            assertThat(result.messages).containsExactly(MESSAGE)
         }
 
         @Test
@@ -165,7 +165,7 @@ class ValidationResultTest {
                 ValidationResult.failure(MESSAGE_1),
                 ValidationResult.failure(MESSAGE_2)
             )
-            assertThat(result.errorMessages).containsExactly(MESSAGE_1, MESSAGE_2)
+            assertThat(result.messages).containsExactly(MESSAGE_1, MESSAGE_2)
         }
     }
 

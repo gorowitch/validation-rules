@@ -17,11 +17,11 @@ class ValidationResultTest {
         }
 
         @Test
-        public void a_failure_result_is_a_Failure_with_a_single_error_message() {
+        public void a_failure_result_is_a_Failure_with_a_single_message() {
             var failure = ValidationResult.failure(MESSAGE);
 
             assertThat(failure).isInstanceOf(ValidationResult.Failure.class);
-            assertThat(failure.errorMessages()).containsExactly(MESSAGE);
+            assertThat(failure.messages()).containsExactly(MESSAGE);
         }
     }
 
@@ -46,7 +46,7 @@ class ValidationResultTest {
             var combination = ValidationResult.combine(ValidationResult.failure(MESSAGE));
 
             assertThat(combination).isInstanceOf(ValidationResult.Failure.class);
-            assertThat(combination.errorMessages()).containsExactly(MESSAGE);
+            assertThat(combination.messages()).containsExactly(MESSAGE);
         }
 
         @Test
@@ -67,7 +67,7 @@ class ValidationResultTest {
             );
 
             assertThat(combination).isInstanceOf(ValidationResult.Failure.class);
-            assertThat(((ValidationResult.Failure) combination).errorMessages()).containsExactly(MESSAGE);
+            assertThat(combination.messages()).containsExactly(MESSAGE);
         }
 
         @Test
@@ -78,7 +78,7 @@ class ValidationResultTest {
             );
 
             assertThat(combination).isInstanceOf(ValidationResult.Failure.class);
-            assertThat(combination.errorMessages()).containsExactly(MESSAGE_1, MESSAGE_2);
+            assertThat(combination.messages()).containsExactly(MESSAGE_1, MESSAGE_2);
         }
     }
 
@@ -94,7 +94,7 @@ class ValidationResultTest {
             );
 
             assertThat(combination).isInstanceOf(ValidationResult.Failure.class);
-            assertThat(combination.errorMessages()).containsExactly(MESSAGE_1, MESSAGE_2);
+            assertThat(combination.messages()).containsExactly(MESSAGE_1, MESSAGE_2);
         }
     }
 
@@ -152,14 +152,14 @@ class ValidationResultTest {
         public void feedback_success_has_no_messages() {
             var result = ValidationResult.success();
 
-            assertThat(result.errorMessages()).isEmpty();
+            assertThat(result.messages()).isEmpty();
         }
 
         @Test
         public void feedback_failure_has_a_message() {
             var result = ValidationResult.failure(MESSAGE);
 
-            assertThat(result.errorMessages()).containsExactly(MESSAGE);
+            assertThat(result.messages()).containsExactly(MESSAGE);
         }
 
         @Test
@@ -169,7 +169,7 @@ class ValidationResultTest {
                 ValidationResult.failure(MESSAGE_2)
             );
 
-            assertThat(result.errorMessages()).containsExactly(MESSAGE_1, MESSAGE_2);
+            assertThat(result.messages()).containsExactly(MESSAGE_1, MESSAGE_2);
         }
     }
 
