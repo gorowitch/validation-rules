@@ -3,10 +3,8 @@ package j.examples.rules.feedback;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-import java.util.function.Supplier;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import static j.examples.rules.feedback.AssertionUtils.assertNotValid;
+import static j.examples.rules.feedback.AssertionUtils.assertValid;
 
 class NameRuleTest {
     private static final NameRule rule = new NameRule();
@@ -75,15 +73,7 @@ class NameRuleTest {
                 () -> rule.validate("\t1234567890123456789012345678901234567890123456789012345678901234"),
                 "The name \"\t1234567890123456789012345678901234567890123456789012345678901234\" must have a length >=1 and <=64. Was 65",
                 "The name \"\t1234567890123456789012345678901234567890123456789012345678901234\" must start and end with a non-whitespace-character"
-                );
+            );
         }
-    }
-
-    private static void assertValid(Supplier<List<String>> supplier) {
-        assertThat(supplier.get()).isEmpty();
-    }
-
-    private static void assertNotValid(Supplier<List<String>> supplier, String... message) {
-        assertThat(supplier.get()).containsExactly(message);
     }
 }

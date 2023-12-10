@@ -1,13 +1,10 @@
 package j.examples.rules.combined;
 
-import j.examples.validation.ValidationResult;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.function.Supplier;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
+import static j.examples.rules.combined.AssertionUtils.assertNotValid;
+import static j.examples.rules.combined.AssertionUtils.assertValid;
 
 class NameRuleTest {
     private static final NameRule rule = new NameRule();
@@ -77,20 +74,6 @@ class NameRuleTest {
                 "The name \"\t1234567890123456789012345678901234567890123456789012345678901234\" must have a length >=1 and <=64. Was 65",
                 "The name \"\t1234567890123456789012345678901234567890123456789012345678901234\" must start and end with a non-whitespace-character"
             );
-        }
-    }
-
-    private static void assertValid(Supplier<ValidationResult> supplier) {
-        assertThat(supplier.get()).isInstanceOf(ValidationResult.Success.class);
-    }
-
-    private static void assertNotValid(Supplier<ValidationResult> supplier, String... messages) {
-        var result = supplier.get();
-
-        if (result instanceof ValidationResult.Failure s) {
-            assertThat(s.errorMessages()).containsExactly(messages);
-        } else {
-            fail();
         }
     }
 }

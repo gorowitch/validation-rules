@@ -3,9 +3,8 @@ package j.examples.rules.condition;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.function.Supplier;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import static j.examples.rules.condition.AssertionUtils.assertNotValid;
+import static j.examples.rules.condition.AssertionUtils.assertValid;
 
 class NameRuleTest {
     private static final NameRule rule = new NameRule();
@@ -55,13 +54,5 @@ class NameRuleTest {
         void have_trailing_whitespace_characters() {
             assertNotValid(() -> rule.validate("name\t"));
         }
-    }
-
-    private static void assertValid(Supplier<Boolean> supplier) {
-        assertThat(supplier.get()).isTrue();
-    }
-
-    private static void assertNotValid(Supplier<Boolean> supplier) {
-        assertThat(supplier.get()).isFalse();
     }
 }

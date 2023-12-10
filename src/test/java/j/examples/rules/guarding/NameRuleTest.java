@@ -1,13 +1,11 @@
 package j.examples.rules.guarding;
 
 
-import j.examples.validation.ValidationException;
-import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static j.examples.rules.guarding.AssertionUtils.assertNotValid;
+import static j.examples.rules.guarding.AssertionUtils.assertValid;
 
 class NameRuleTest {
     private static final NameRule rule = new NameRule();
@@ -66,15 +64,5 @@ class NameRuleTest {
                 () -> rule.validate("name\t"),
                 "The name \"name\t\" must start and end with a non-whitespace-character");
         }
-    }
-
-    private static void assertValid(ThrowableAssert.ThrowingCallable throwingCallable) {
-        assertThatCode(throwingCallable).doesNotThrowAnyException();
-    }
-
-    private static void assertNotValid(ThrowableAssert.ThrowingCallable throwingCallable, String message) {
-        assertThatThrownBy(throwingCallable)
-            .isInstanceOf(ValidationException.class)
-            .hasMessage(message);
     }
 }
