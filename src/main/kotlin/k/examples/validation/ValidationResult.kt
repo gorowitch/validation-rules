@@ -3,7 +3,6 @@ package k.examples.validation
 sealed class ValidationResult {
     abstract val success: Boolean
     abstract fun check()
-
     abstract val errorMessages: List<String>
 
     object Success : ValidationResult() {
@@ -19,18 +18,14 @@ sealed class ValidationResult {
         }
     }
 
-    data class SingleFailure(
-        private val errorMessage: String
-    ) : Failure() {
+    data class SingleFailure(private val errorMessage: String) : Failure() {
         override val errorMessages: List<String>
             get() {
                 return listOf(errorMessage)
             }
     }
 
-    data class CombinedFailure(
-        val failures: List<Failure>,
-    ) : Failure() {
+    data class CombinedFailure(val failures: List<Failure>) : Failure() {
         override val errorMessages: List<String>
             get() {
                 return failures.flatMap { it.errorMessages }
@@ -40,8 +35,10 @@ sealed class ValidationResult {
     companion object {
         fun success() = Success
         fun failure(message: String) = SingleFailure(message)
-        fun combine(vararg validationResults: ValidationResult): ValidationResult {
-            val failures = validationResults.filterIsInstance<Failure>()
+        fun combine(vararg validationResults: ValidationResult)
+            : ValidationResult {
+            val failures = validationResults
+                .filterIsInstance<Failure>()
 
             return if (failures.isNotEmpty()) {
                 CombinedFailure(failures)
@@ -50,6 +47,9 @@ sealed class ValidationResult {
             }
         }
 
-        fun combine(validationResults: Collection<ValidationResult>): ValidationResult = combine(*validationResults.toTypedArray())
+        fun combine(validationResults: Collection<ValidationResult>)
+            : ValidationResult {
+            return combine(*validationResults.toTypedArray())
+        }
     }
 }
